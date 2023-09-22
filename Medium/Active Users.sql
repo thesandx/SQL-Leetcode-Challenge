@@ -66,8 +66,8 @@
 -- Solution
 with t1 as (
 select id,login_date,
-lead(login_date,4) over(partition by id order by login_date) date_5
-from (select distinct * from Logins) b
+lead(login_date,4) over(partition by id order by login_date) date_5 -- now you will get login diff 
+from (select distinct * from Logins --to get unique days and remove same day login data) b 
 )
 
 select distinct a.id, a.name from t1
@@ -75,3 +75,7 @@ inner join accounts a
 on t1.id = a.id
 where datediff(t1.date_5,login_date) = 4
 order by id
+
+
+ --extra
+ ek condition hoti hai -  where datediff(date1,date2) between 1 and 4
